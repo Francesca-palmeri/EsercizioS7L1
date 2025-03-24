@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using EsercizioS7L1.Data;
+using EsercizioS7L1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +11,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ApplicationDbContext>(options => 
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<StudentService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
