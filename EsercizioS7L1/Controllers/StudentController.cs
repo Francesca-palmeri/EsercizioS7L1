@@ -55,5 +55,21 @@ namespace EsercizioS7L1.Controllers
                 students = studentsList 
             });
         }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var result = await _studentService.GetStudentByIdAsync(id);
+
+            return result != null ? Ok(new {message = "Studente trovato", student = result }) : BadRequest(new { message = "Qualcosa è andato storto" });
+
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _studentService.DeleteStudentAsync(id);
+            return result ? Ok(new { message = "Studente eliminato con successo" }) : BadRequest(new { message = "Qualcosa è andato storto" });
+        }
     }
 }

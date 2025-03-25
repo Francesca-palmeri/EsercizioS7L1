@@ -46,5 +46,37 @@ namespace EsercizioS7L1.Services
                 return null;
             }
         }
+
+        public async Task<Student?> GetStudentByIdAsync(Guid id)
+        {
+            try
+            {
+                return await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
+
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
+        public async Task<bool> DeleteStudentAsync(Guid id)
+        {
+            try
+            {
+                var existingStudent = await GetStudentByIdAsync(id);
+                if (existingStudent == null)
+                {
+                    return false;
+                }
+                _context.Students.Remove(existingStudent);
+                return await SaveAsync();
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
